@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+HierVST
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+          <style type="text/css">
+                 a:link { color: black; text-decoration: none;}
+                 a:visited { color: black; text-decoration: none;}
+                 a:hover { color: blue; text-decoration: underline;}
+             #player {width: 180px;}
+          </style>
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no", user-scalable="yes">
+          <meta name="description" content="HierVST audio demo page">
+          <meta name="author" content="HierVST">
+          <title>HierVST Demo</title>
+          
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+          <link href="css/styles.css" rel="stylesheet">
+          <link rel="stylesheet" href="css/heading.css">
+          <link rel="stylesheet" href="css/body.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css" integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ==" crossorigin="anonymous" />
+      </head>
+
+    <body id="page-top">
+        <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+            <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top">HierVST</a>
+                <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#abstract">Abstract</a>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#m2m">Many-to-Many VC</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#zeroshot">Zero-shot VC</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#oneshot">One-shot VC</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#ablation">Ablation Study</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <header class="masthead bg-white text-left"> 
+            <div class="container d-flex align-items-center flex-column">
+                <h1 class="masthead-heading mb-0">HierVST: Hierarchical Adaptive Zero-shot Voice Style Transfer</h1>
+		            <p class="pre-wrap lead">&nbsp;</p>
+                <img src="img/HierVST.png" alt="main" style="max-width: 100%; height: auto;"> 
+                <br><em>Overall framework of HierVST</em><p></p><br>
+            </div>
+        </header>
+
+        <section class="page-section alert-secondary portfolio" id="abstract">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="page-section-heading text-secondary mb-0 d-inline-block">Abstract</h2>
+                </div>
+                <div class="divider-custom">
+                    <div class="divider-custom"></div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-12 ml-auto">
+                      <p class="pre-wrap lead"> Despite rapid progress in the voice style transfer (VST) field, recent zero-shot VST systems still lack the ability to transfer the voice style of a novel speaker. In this paper, we present HierVST, a hierarchical adaptive end-to-end zero-shot VST model. Without any text transcripts, we only use the speech dataset to train the model by utilizing hierarchical variational inference and self-supervised representation. In addition, we adopt a hierarchical adaptive generator that generates the pitch representation and waveform audio sequentially. Moreover, we utilize unconditional generation to improve the speaker-relative acoustic capacity in the acoustic representation. With a hierarchical adaptive structure, the model can adapt to a novel voice style and convert speech progressively. The experimental results demonstrate that our method outperforms other VST models in zero-shot VST scenarios.
+                      </p>
+                        <p class="pre-wrap lead">&nbsp;</p>
+                        <p class="pre-wrap lead">We compare HierVST with several Voice Conversion models as:</p>
+                        <p class="pre-wrap lead">  1. AutoVC [K. Qian et al., 2019] : <a href="https://auspicious3000.github.io/autovc-demo/">[Official Demo page]</a></p>
+                        <p class="pre-wrap lead">  2. VoiceMixer [S.-H. Lee et al., 2021]: <a href="https://anonymous-speech.github.io/voicemixer/index.html">[Official Demo page]</a></p>
+                        <p class="pre-wrap lead">  3. DiffVC [V. Popov et al., 2022]:  <a href="https://diffvc-fast-ml-solver.github.io/">[Official Demo page]</a></p>
+                        <p class="pre-wrap lead">  4. Speech Resynthesis [A. Polyak et al., 2021]: <a href="https://speechbot.github.io/resynthesis/">[Official Demo page]</a></p>
+                        <p class="pre-wrap lead">  5. YourTTS [E. Casanova et al., 2022]: <a href="https://edresson.github.io/YourTTS/">[Official Demo page]</a>
+	                      <p class="pre-wrap lead">&nbsp;</p>
+	                    </div>
+                    </div>         
+                </div>
+            </div>
+        </section>
+        <style>
+          tr, td {
+            text-align:center;
+          }
+          tr {
+            font-size: 15pt;
+          }
+          td {
+            font-size: 13pt;
+          }
+        </style>
+    
+        <section class="page-section bg-info text-white mb-0" id="m2m">	
+            <div class="container">
+              <div class="text-center">
+                <h2 class="page-section-heading d-inline-block text-white">Many-to-Many Voice Conversion (LibriTTS)</h2>
+                <p class="pre-wrap lead"> All speakers are seen during training </p>
+              </div>
+  
+              <div class="divider-custom divider-light">
+              </div>
+              <div class="row">
+                  <div class="col-lg-12 ml-auto">
+                    <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                      <tr>
+                        <th style="width: 22%"> Source Speaker</th>
+                        <th style="width: 22%"> Target Speaker</th>
+                        <th style="width: 20%"> Converted</th>
+                        <th style="width: 20%">         </th>
+                        <th style="width: 10%">         </th>
+                      </tr>
+
+                    <tbody>
+                      <tr>
+                        <td rowspan="2" style="vertical-align: top;"><p> GT ( 159 ) </p>
+                          <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                        </td>
+                        <td rowspan="2" style="vertical-align: top;"><p>  GT ( 16 ) </p>
+                          <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                        </td>
+                      
+                        <td><p>&nbsp; AutoVC</p>
+                          <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                        </td>
+                        <td><p>&nbsp; VoiceMixer</p>
+                          <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                        </td>
+                        <td><p>DiffVC</p>
+                          <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                        </td><td></td>
+                      </tr>
+                    
+                      <tr>
+                        <td><p>Speech Resynthesis</p>
+                          <audio id="player" controls><source src="audio/1_m2m_demo/SR/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                        </td>  
+                        <td><p>YourTTS</p>
+                          <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                        </td>
+                        <td><p><strong>HierVST (Ours) </strong></p>
+                          <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                        </td><td></td>
+                      </tr>
+                    </tbody>
+
+                       <tbody>
+                        <tr>
+                          <td rowspan="2" style="vertical-align: top;"><p> GT ( 374 ) </p>
+                            <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="2" style="vertical-align: top;"><p>  GT ( 1607 ) </p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/SR/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                      <tbody>
+                        <tr>
+                          <td rowspan="2" style="vertical-align: top;"><p> GT ( 1571 ) </p>
+                            <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="2" style="vertical-align: top;"><p>  GT ( 3699 ) </p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/SR/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                      <tbody>
+                        <tr>
+                          <td rowspan="2" style="vertical-align: top;"><p> GT ( 1638 ) </p>
+                            <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="2" style="vertical-align: top;"><p>  GT ( 3440 ) </p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/SR/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                      <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( 3526 ) </p>
+                            <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( 159 ) </p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/SR/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                       <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( 159 ) </p>
+                            <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( 16 ) </p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/SR/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div> 
+            </div>
+        </section>
+
+        <section class="page-section bg-primary text-white mb-0" id="zeroshot">
+          <div class="container">
+            <div class="text-center">
+              <h2 class="page-section-heading d-inline-block">Zero-shot Voice Conversion (VCTK)</h2>
+              <p class="pre-wrap lead">All speakers are unseen during training</p>
+            </div>
+
+            <div class="divider-custom divider-light">
+              </div>
+              <div class="row">
+                  <div class="col-lg-12 ml-auto">
+                    <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                      <tr>
+                        <th style="width: 22%"> Source Speaker</th>
+                        <th style="width: 22%"> Target Speaker</th>
+                        <th style="width: 20%"> Converted</th>
+                        <th style="width: 20%">         </th>
+                        <th style="width: 10%">         </th>
+                      </tr>
+                      
+                      <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p226 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p226_007.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p238 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p238_011.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/AutoVC/p226_007_to_p238_011.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/VoiceMixer/p226_007_to_p238_011.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/DiffVC/p226_007_to_p238_011.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/SR/p226_007_to_p238_011.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/YourTTS/p226_007_to_p238_011.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/HierVST/p226_007_to_p238_011.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                        <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p228 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p228_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p233 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p233_018.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/AutoVC/p228_022_to_p233_018.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/VoiceMixer/p228_022_to_p233_018.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/DiffVC/p228_022_to_p233_018.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/SR/p228_022_to_p233_018.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/YourTTS/p228_022_to_p233_018.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/HierVST/p228_022_to_p233_018.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                         <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p233 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p233_018.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p227 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p227_013.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/AutoVC/p233_018_to_p227_013.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/VoiceMixer/p233_018_to_p227_013.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/DiffVC/p233_018_to_p227_013.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/SR/p233_018_to_p227_013.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/YourTTS/p233_018_to_p227_013.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/HierVST/p233_018_to_p227_013.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                        <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p240 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p236 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p236_004.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/AutoVC/p240_022_to_p236_004.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/VoiceMixer/p240_022_to_p236_004.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/DiffVC/p240_022_to_p236_004.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/SR/p240_022_to_p236_004.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/YourTTS/p240_022_to_p236_004.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/HierVST/p240_022_to_p236_004.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                        <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p241 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p241_004.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p232 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p232_003.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/AutoVC/p241_004_to_p232_003.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/VoiceMixer/p241_004_to_p232_003.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/DiffVC/p241_004_to_p232_003.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/SR/p241_004_to_p232_003.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/YourTTS/p241_004_to_p232_003.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/2_zero_demo/HierVST/p241_004_to_p232_003.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div> 
+            </div>
+        </section>
+
+        <section class="page-section bg-info text-white mb-0" id="oneshot">
+          <div class="container">
+            <div class="text-center">
+              <h2 class="page-section-heading d-inline-block">One-shot Voice Conversion</h2>
+              <p class="pre-wrap lead">We fine-tune the HierVST with only a single sample. Iter. denotes the fine-tuning iteration.</p>
+            </div>
+          
+            <div class="divider-custom divider-light">
+              </div>
+          
+            <div class="row">
+                <div class="col-lg-12 ml-auto">
+                  <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                    <tr>
+                        <th style="width: 22%"> Source Speaker</th>
+                        <th style="width: 22%"> Target Speaker</th>
+                        <th style="width: 20%"> Converted</th>
+                        <th style="width: 20%">         </th>
+                        <th style="width: 10%">         </th>
+                    </tr>
+                      
+                      <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p246 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p246_019.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p240 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p240_022.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; Zero-shot </p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_zeroshot_vctk/p246_019_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; 100 iter. </p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_100_vctk/p246_019_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> 300 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_300_vctk/p246_019_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p> 500 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_500_vctk/p246_019_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> 1000 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_1000_vctk/p246_019_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> 1500 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_1500_vctk/p246_019_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                      <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p230 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p230_014.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p237 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p237_020.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; Zero-shot </p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_zeroshot_vctk/p230_014_to_p237_020.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; 100 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_100_vctk/p230_014_to_p237_020.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> 300 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_300_vctk/p230_014_to_p237_020.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p> 500 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_500_vctk/p230_014_to_p237_020.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> 1000 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_1000_vctk/p230_014_to_p237_020.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>1500 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_1500_vctk/p230_014_to_p237_020.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                      <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p237 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p237_020.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p246 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p246_019.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; Zero-shot </p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_zeroshot_vctk/p237_020_to_p246_019.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; 100 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_100_vctk/p237_020_to_p246_019.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> 300 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_300_vctk/p237_020_to_p246_019.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p> 500 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_500_vctk/p237_020_to_p246_019.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> 1000 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_1000_vctk/p237_020_to_p246_019.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> 1500 iter.</p>
+                            <audio id="player" controls><source src="audio/oneshot_demo/hiervc_ft_vctk_vc_1500_vctk/p237_020_to_p246_019.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                  </table>
+              </div>           
+            </div>
+        </div>
+        </section>
+               
+        <section class="page-section bg-primary text-white mb-0" id="ablation">
+          <div class="container">
+            <div class="text-center">
+              <h2 class="page-section-heading d-inline-block">Ablation study</h2>
+              <p class="pre-wrap lead"> p<sub>uncond</sub> denotes the unconditional generation ratio during training. <br>PD: Prosody Distillation <br>HVAE: Hierarchical Variational Autoencoder<br>HAG: Hierarchical Adaptive Generator </p>
+            </div>
+
+            <div class="divider-custom divider-light">
+              </div>
+          
+              <div class="row">
+                  <div class="col-lg-12 ml-auto">
+                    <table class="table table-responsive align-content-center"  style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                        <tr>
+                          <th style="width: 22%"> Source Speaker</th>
+                          <th style="width: 22%"> Target Speaker</th>
+                          <th style="width: 20%"> Converted</th>
+                          <th style="width: 20%">         </th>
+                          <th style="width: 10%">         </th>
+                        </tr>
+                      <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( p246 ) </p>
+                            <audio id="player" controls ><source src="audio/GT_VCTK/p238_011.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( p240 ) </p>
+                            <audio id="player" controls><source src="audio/GT_VCTK/p240_022.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; HierVST (p<sub>uncond</sub>=0) </p>
+                            <audio id="player" controls><source src="audio/ablation_vctk_demo/01_hiervst_uncond_00/p238_011_to_p240_022.wav" type="audio/wav"></audio>
+                          </td><td></td>
+                        </tr>
+
+                        <tr>
+                          <td><p>&nbsp; <strong> HierVST (p<sub>uncond</sub>=0.1) </strong></p>
+                            <audio id="player" controls><source src="audio/ablation_vctk_demo/02_hiervst_uncond_01/p238_011_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> HierVST (p<sub>uncond</sub>=0.2)</p>
+                            <audio id="player" controls><source src="audio/ablation_vctk_demo/03_hiervst_uncond_02/p238_011_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> HierVST (p<sub>uncond</sub>=0.5)</p>
+                            <audio id="player" controls><source src="audio/ablation_vctk_demo/04_hiervst_uncond_05/p238_011_to_p240_022.wav" type="audio/wav"></audio>
+                          </td><td></td>
+                        </tr>
+                        <tr>
+                            <td><p>&nbsp; w.o PD </p>
+                            <audio id="player" controls><source src="audio/ablation_vctk_demo/05_hiervst_no_pd/p238_011_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> w.o PD & HVAE</p>
+                            <audio id="player" controls><source src="audio/ablation_vctk_demo/06_hiervst_no_pd_no_hvae/p238_011_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p> w.o PD & HVAE & HAG</p>
+                            <audio id="player" controls><source src="audio/ablation_vctk_demo/07_hiervst_no_pd_no_hvae_no_hag/p238_011_to_p240_022.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div> 
+            </div>
+        </section>
+
+
+        <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="js/scripts.js"></script>
+        
+        <!-- Bootstrap slider JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js" integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA==" crossorigin="anonymous"></script>
+
+        <!-- slider JS -->
+        <script type="text/javascript">
+        </script>
+    </body>
+</html>
+
+<style>
+
+  .noborder{
+          border: none!important;
+    }
+  .grid-image {
+      display:flex;
+      flex-wrap:wrap;
+      align-items:flex-start;
+      margin:30px 0;
+  }
+  .grid-image img {
+      width:calc(33.333% - 10px);
+      margin:0 15px 15px 0;
+  }
+  .grid-image img:nth-of-type(3n),
+  .grid-image img:last-child {
+      margin-right:0;
+  }
+  @media screen and (max-width:640px){
+    .grid-image img {
+      width:calc(50% - 15px);
+    }
+  }
+  @media screen and (max-width:480px){
+    .grid-image img:nth-of-type(2n) {
+      margin-right:0;
+    }
+    .grid-image img:nth-of-type(3n) {
+      margin-right:15px;
+    }
+  }
+  </style>
