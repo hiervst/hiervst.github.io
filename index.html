@@ -7,11 +7,11 @@ HierVST
                  a:link { color: black; text-decoration: none;}
                  a:visited { color: black; text-decoration: none;}
                  a:hover { color: blue; text-decoration: underline;}
-             #player {width: 180px;}
+             #player {width: 190px;}
           </style>
           <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no", user-scalable="yes">
           <meta name="description" content="HierVST audio demo page">
-          <meta name="author" content="HierVST">
+          <meta name="autor" content="HierVST">
           <title>HierVST Demo</title>
           
           <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
@@ -32,6 +32,7 @@ HierVST
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#zeroshot">Zero-shot VC</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#oneshot">One-shot VC</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#ablation">Ablation Study</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#crosslingual">Cross-lingual VC</a></li>
                     </ul>
                 </div>
             </div>
@@ -41,7 +42,7 @@ HierVST
                 <h1 class="masthead-heading mb-0">HierVST: Hierarchical Adaptive Zero-shot Voice Style Transfer</h1>
 		            <p class="pre-wrap lead">&nbsp;</p>
                 <img src="img/HierVST.png" alt="main" style="max-width: 100%; height: auto;"> 
-                <br><em>Overall framework of HierVST</em><p></p><br>
+                <em>Overall framework of HierVST</em><p></p><br>
             </div>
         </header>
 
@@ -94,53 +95,54 @@ HierVST
               <div class="row">
                   <div class="col-lg-12 ml-auto">
                     <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
-                      <tr>
-                        <th style="width: 22%"> Source Speaker</th>
-                        <th style="width: 22%"> Target Speaker</th>
-                        <th style="width: 20%"> Converted</th>
-                        <th style="width: 20%">         </th>
-                        <th style="width: 10%">         </th>
-                      </tr>
+                      <thead><tr>
+                        <th style="width:8%">Source Speaker</th>
+                        <th style="width:8%">Target Speaker</th>
+                        <th style="width: 23%"> Converted</th>
+                        <th style="width: 22%">         </th>
+                        <th style="width: 1%">         </th>
+                      </tr></thead>
 
-                    <tbody>
-                      <tr>
-                        <td rowspan="2" style="vertical-align: top;"><p> GT ( 159 ) </p>
-                          <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
-                        </td>
-                        <td rowspan="2" style="vertical-align: top;"><p>  GT ( 16 ) </p>
-                          <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
-                        </td>
-                      
-                        <td><p>&nbsp; AutoVC</p>
-                          <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
-                        </td>
-                        <td><p>&nbsp; VoiceMixer</p>
-                          <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
-                        </td>
-                        <td><p>DiffVC</p>
-                          <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
-                        </td><td></td>
-                      </tr>
-                    
-                      <tr>
-                        <td><p>Speech Resynthesis</p>
-                          <audio id="player" controls><source src="audio/1_m2m_demo/SR/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
-                        </td>  
-                        <td><p>YourTTS</p>
-                          <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
-                        </td>
-                        <td><p><strong>HierVST (Ours) </strong></p>
-                          <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
-                        </td><td></td>
-                      </tr>
-                    </tbody>
-
-                       <tbody>
+                      <tbody>
                         <tr>
-                          <td rowspan="2" style="vertical-align: top;"><p> GT ( 374 ) </p>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( 159 ) </p>
+                            <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( 16 ) </p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                       
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+                      
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/SR/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>  
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+
+                                           <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( 374 ) </p>
                             <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
                           </td>
-                          <td rowspan="2" style="vertical-align: top;"><p>  GT ( 1607 ) </p>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( 1607 ) </p>
                             <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/374_180299_000047_000002_to_1607_149245_000007_000001.wav" type="audio/wav"></audio>
                           </td>
 
@@ -169,12 +171,12 @@ HierVST
                         </tr>
                       </tbody>
 
-                      <tbody>
+                                           <tbody>
                         <tr>
-                          <td rowspan="2" style="vertical-align: top;"><p> GT ( 1571 ) </p>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( 1571 ) </p>
                             <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
                           </td>
-                          <td rowspan="2" style="vertical-align: top;"><p>  GT ( 3699 ) </p>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( 3699 ) </p>
                             <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/1571_141320_000065_000006_to_3699_47246_000011_000001.wav" type="audio/wav"></audio>
                           </td>
 
@@ -203,12 +205,12 @@ HierVST
                         </tr>
                       </tbody>
 
-                      <tbody>
+                                           <tbody>
                         <tr>
-                          <td rowspan="2" style="vertical-align: top;"><p> GT ( 1638 ) </p>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( 1638 ) </p>
                             <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
                           </td>
-                          <td rowspan="2" style="vertical-align: top;"><p>  GT ( 3440 ) </p>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( 3440 ) </p>
                             <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/1638_84448_000068_000004_to_3440_171009_000143_000000.wav" type="audio/wav"></audio>
                           </td>
 
@@ -237,7 +239,7 @@ HierVST
                         </tr>
                       </tbody>
 
-                      <tbody>
+                                          <tbody>
                         <tr>
                           <td rowspan="4" style="vertical-align: top;"><p> GT ( 3526 ) </p>
                             <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/3526_176653_000089_000001_to_159_135897_000037_000000.wav" type="audio/wav"></audio>
@@ -269,7 +271,41 @@ HierVST
                           </td>
                           <td></td>
                         </tr>
-                      </tbody> 
+                      </tbody>
+
+                       <tbody>
+                        <tr>
+                          <td rowspan="4" style="vertical-align: top;"><p> GT ( 159 ) </p>
+                            <audio id="player" controls ><source src="audio/1_m2m_demo/GT_nmos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td rowspan="4" style="vertical-align: top;"><p>  GT ( 16 ) </p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/GT_smos/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+
+                          <td><p>&nbsp; AutoVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/AutoVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>&nbsp; VoiceMixer</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/VoiceMixer/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>DiffVC</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/DiffVC/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><p>Speech Resynthesis</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/SR/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p>YourTTS</p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/YourTTS/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td><p><strong>HierVST (Ours) </strong></p>
+                            <audio id="player" controls><source src="audio/1_m2m_demo/HierVST/159_135897_000037_000000_to_16_122828_000065_000000.wav" type="audio/wav"></audio>
+                          </td>
+                          <td></td>
+                        </tr>
+                      </tbody>
                     </table>
                   </div>
                 </div> 
@@ -288,13 +324,13 @@ HierVST
               <div class="row">
                   <div class="col-lg-12 ml-auto">
                     <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
-                      <tr>
-                        <th style="width: 22%"> Source Speaker</th>
-                        <th style="width: 22%"> Target Speaker</th>
-                        <th style="width: 20%"> Converted</th>
-                        <th style="width: 20%">         </th>
-                        <th style="width: 10%">         </th>
-                      </tr>
+                      <thead><tr>
+                        <th style="width:8%">Source Speaker</th>
+                        <th style="width:8%">Target Speaker</th>
+                        <th style="width: 23%"> Converted</th>
+                        <th style="width: 22%">         </th>
+                        <th style="width: 1%">         </th>
+                      </tr></thead>
                       
                       <tbody>
                         <tr>
@@ -484,13 +520,13 @@ HierVST
             <div class="row">
                 <div class="col-lg-12 ml-auto">
                   <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
-                    <tr>
-                        <th style="width: 22%"> Source Speaker</th>
-                        <th style="width: 22%"> Target Speaker</th>
-                        <th style="width: 20%"> Converted</th>
-                        <th style="width: 20%">         </th>
-                        <th style="width: 10%">         </th>
-                    </tr>
+                    <thead><tr>
+                      <th style="width:8%">Source Speaker</th>
+                        <th style="width:8%">Target Speaker</th>
+                        <th style="width: 23%"> Converted</th>
+                        <th style="width: 22%">         </th>
+                        <th style="width: 1%">         </th>
+                    </tr></thead>
                       
                       <tbody>
                         <tr>
@@ -613,13 +649,15 @@ HierVST
               <div class="row">
                   <div class="col-lg-12 ml-auto">
                     <table class="table table-responsive align-content-center"  style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
-                        <tr>
-                          <th style="width: 22%"> Source Speaker</th>
-                          <th style="width: 22%"> Target Speaker</th>
-                          <th style="width: 20%"> Converted</th>
-                          <th style="width: 20%">         </th>
-                          <th style="width: 10%">         </th>
-                        </tr>
+                      <thead><tr>
+                        <thead><tr>
+                      <th style="width:8%">Source Speaker</th>
+                        <th style="width:8%">Target Speaker</th>
+                        <th style="width: 23%"> Converted</th>
+                        <th style="width: 22%">         </th>
+                        <th style="width: 1%">         </th>
+                    </tr></thead>
+
                       <tbody>
                         <tr>
                           <td rowspan="4" style="vertical-align: top;"><p> GT ( p246 ) </p>
@@ -631,7 +669,9 @@ HierVST
 
                           <td><p>&nbsp; HierVST (p<sub>uncond</sub>=0) </p>
                             <audio id="player" controls><source src="audio/ablation_vctk_demo/01_hiervst_uncond_00/p238_011_to_p240_022.wav" type="audio/wav"></audio>
-                          </td><td></td>
+                          </td>
+                         <td>   </td>
+                               <td>   </td>
                         </tr>
 
                         <tr>
@@ -643,7 +683,9 @@ HierVST
                           </td>
                           <td><p> HierVST (p<sub>uncond</sub>=0.5)</p>
                             <audio id="player" controls><source src="audio/ablation_vctk_demo/04_hiervst_uncond_05/p238_011_to_p240_022.wav" type="audio/wav"></audio>
-                          </td><td></td>
+                          </td>
+
+                          <td></td>
                         </tr>
                         <tr>
                             <td><p>&nbsp; w.o PD </p>
@@ -664,7 +706,214 @@ HierVST
                 </div> 
             </div>
         </section>
+        
+        <section class="page-section bg-info text-white mb-0" id="crosslingual">
+          <div class="container">
+            <div class="text-center">
+              <h2 class="page-section-heading d-inline-block">Zero-shot Cross-lingual Voice Conversion</h2>
+              <p class="pre-wrap lead">Unseen language from CSS10 multi-lingual dataset</p>
+            </div>
+          
+            <div class="divider-custom divider-light">
+              </div>
+          
+            <div class="row">
+                <div class="col-lg-12 ml-auto">
+                  <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                    <thead><tr>
+                      <th style="width: 33%">Source Speaker</th>
+                      <th style="width: 33%">Target Speaker</th>
+                      <th style="width: 33%">Converted</th>
+                      <th style="width: 1%"></th>
+                    </tr></thead>
+                      
+                  <tbody>
+                    <tr>
+                      <td rowspan="1" style="vertical-align: top;"><p> French </p>
+                        <audio id="player" controls ><source src="audio/Cross/French/lupincontresholme_3153.wav" type="audio/wav"></audio>
+                      </td>
+                      <td rowspan="1" style="vertical-align: top;"><p> Hungarian </p>
+                        <audio id="player" controls><source src="audio/Cross/French/egri_csillagok_4514.wav" type="audio/wav"></audio>
+                      </td>
+                      <td><p><strong>HierVST</strong></p>
+                        <audio id="player" controls><source src="audio/Cross/French/lupincontresholme_3153_to_egri_csillagok_4514.wav" type="audio/wav"></audio>
+                      </td>
+                    </tr>
 
+                    <tr>
+                      <td rowspan="1" style="vertical-align: top;"><p> French </p>
+                        <audio id="player" controls ><source src="audio/Cross/French/lupincontresholme_3153.wav" type="audio/wav"></audio>
+                      </td>
+                      <td rowspan="1" style="vertical-align: top;"><p> Greek </p>
+                        <audio id="player" controls><source src="audio/Cross/French/Paramythi_horis_onoma_1843.wav" type="audio/wav"></audio>
+                      </td>
+                      <td><p><strong>HierVST</strong></p>
+                        <audio id="player" controls><source src="audio/Cross/French/lupincontresholme_3153_to_Paramythi_horis_onoma_1843.wav" type="audio/wav"></audio>
+                      </td><td></td>
+                    </tr>
+                  </tbody>
+                  </table>
+              </div>           
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12 ml-auto">
+                <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                  <thead><tr>
+                    <th style="width: 33%">Source Speaker</th>
+                    <th style="width: 33%">Target Speaker</th>
+                    <th style="width: 33%">Converted</th>
+                    <th style="width: 1%"></th>
+                  </tr></thead>
+                    
+                <tbody>
+                  <tr>
+                    <td rowspan="1" style="vertical-align: top;"><p> Finnish </p>
+                      <audio id="player" controls ><source src="audio/Cross/Finnish/salmelan_heinatalkoot_1055.wav" type="audio/wav"></audio>
+                    </td>
+                    <td rowspan="1" style="vertical-align: top;"><p> Dutch </p>
+                      <audio id="player" controls><source src="audio/Cross/Finnish/20000_mijlen_6494.wav" type="audio/wav"></audio>
+                    </td>
+                    <td><p><strong>HierVST</strong></p>
+                      <audio id="player" controls><source src="audio/Cross/Finnish/salmelan_heinatalkoot_1055_to_20000_mijlen_6494.wav" type="audio/wav"></audio>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td rowspan="1" style="vertical-align: top;"><p> Finnish </p>
+                      <audio id="player" controls ><source src="audio/Cross/Finnish/salmelan_heinatalkoot_1055.wav" type="audio/wav"></audio>
+                    </td>
+                    <td rowspan="1" style="vertical-align: top;"><p> Russsian </p>
+                      <audio id="player" controls><source src="audio/Cross/Finnish/shortstories_childrenadults_3882.wav" type="audio/wav"></audio>
+                    </td>
+                    <td><p><strong>HierVST</strong></p>
+                      <audio id="player" controls><source src="audio/Cross/Finnish/salmelan_heinatalkoot_1055_to_shortstories_childrenadults_3882.wav" type="audio/wav"></audio>
+                    </td><td></td>
+                  </tr>
+                </tbody>
+                </table>
+            </div>           
+          </div>
+
+          <div class="row">
+              <div class="col-lg-12 ml-auto">
+                <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                  <thead><tr>
+                    <th style="width: 33%">Source Speaker</th>
+                    <th style="width: 33%">Target Speaker</th>
+                    <th style="width: 33%">Converted</th>
+                    <th style="width: 1%"></th>
+                  </tr></thead>
+                    
+                <tbody>
+                  <tr>
+                    <td rowspan="1" style="vertical-align: top;"><p> Russian </p>
+                      <audio id="player" controls ><source src="audio/Cross/Russian/shortstories_childrenadults_3882.wav" type="audio/wav"></audio>
+                    </td>
+                    <td rowspan="1" style="vertical-align: top;"><p> Dutch </p>
+                      <audio id="player" controls><source src="audio/Cross/Russian/20000_mijlen_6493.wav" type="audio/wav"></audio>
+                    </td>
+                    <td><p><strong>HierVST</strong></p>
+                      <audio id="player" controls><source src="audio/Cross/Russian/shortstories_childrenadults_3882_to_20000_mijlen_6493.wav" type="audio/wav"></audio>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td rowspan="1" style="vertical-align: top;"><p> Russian </p>
+                      <audio id="player" controls ><source src="audio/Cross/Russian/shortstories_childrenadults_3882.wav" type="audio/wav"></audio>
+                    </td>
+                    <td rowspan="1" style="vertical-align: top;"><p> French </p>
+                      <audio id="player" controls><source src="audio/Cross/Russian/lupincontresholme_3154.wav" type="audio/wav"></audio>
+                    </td>
+                    <td><p><strong>HierVST</strong></p>
+                      <audio id="player" controls><source src="audio/Cross/Russian/shortstories_childrenadults_3882_to_lupincontresholme_3154.wav" type="audio/wav"></audio>
+                    </td><td></td>
+                  </tr>
+                </tbody>
+                </table>
+            </div>           
+          </div>
+
+        
+          <div class="row">
+            <div class="col-lg-12 ml-auto width:100%; height:200px; overflow:auto" >
+              <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                <thead><tr>
+                  <th style="width: 33%">Source Speaker</th>
+                  <th style="width: 33%">Target Speaker</th>
+                  <th style="width: 33%">Converted</th>
+                  <th style="width: 1%"></th>
+                </tr></thead>
+                  
+              <tbody>
+                <tr>
+                  <td rowspan="1" style="vertical-align: top;"><p> Spanish </p>
+                    <audio id="player" controls ><source src="audio/Cross/Spanish/batalla_arapiles_4596.wav" type="audio/wav"></audio>
+                  </td>
+                  <td rowspan="1" style="vertical-align: top;"><p> French </p>
+                    <audio id="player" controls><source src="audio/Cross/Spanish/lupincontresholme_3153.wav" type="audio/wav"></audio>
+                  </td>
+                  <td><p><strong>HierVST</strong></p>
+                    <audio id="player" controls><source src="audio/Cross/Spanish/batalla_arapiles_4596_to_lupincontresholme_3153.wav" type="audio/wav"></audio>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td rowspan="1" style="vertical-align: top;"><p> Spanish </p>
+                    <audio id="player" controls ><source src="audio/Cross/Spanish/batalla_arapiles_4596.wav" type="audio/wav"></audio>
+                  </td>
+                  <td rowspan="1" style="vertical-align: top;"><p> Russian </p>
+                    <audio id="player" controls><source src="audio/Cross/Spanish/shortstories_childrenadults_3882.wav" type="audio/wav"></audio>
+                  </td>
+                  <td><p><strong>HierVST</strong></p>
+                    <audio id="player" controls><source src="audio/Cross/Spanish/batalla_arapiles_4596_to_shortstories_childrenadults_3882.wav" type="audio/wav"></audio>
+                  </td><td></td>
+                </tr>
+                </tbody>
+                </table>
+              </div>           
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12 ml-auto">
+                <table class="table table-responsive align-content-center" style="background-color: rgba(255, 255, 255, 0.993); border-radius: 20px">
+                  <thead><tr>
+                    <th style="width: 33%">Source Speaker</th>
+                    <th style="width: 33%">Target Speaker</th>
+                    <th style="width: 33%">Converted</th>
+                    <th style="width: 1%"></th>
+                  </tr></thead>
+                    
+                <tbody>
+                  <tr>
+                    <td rowspan="1" style="vertical-align: top;"><p> German </p>
+                      <audio id="player" controls ><source src="audio/Cross/German/serapionsbruederauswahl_1717.wav" type="audio/wav"></audio>
+                    </td>
+                    <td rowspan="1" style="vertical-align: top;"><p> French </p>
+                      <audio id="player" controls><source src="audio/Cross/German/Paramythi_horis_onoma_1842.wav" type="audio/wav"></audio>
+                    </td>
+                    <td><p><strong>HierVST</strong></p>
+                      <audio id="player" controls><source src="audio/Cross/German/serapionsbruederauswahl_1717_to_Paramythi_horis_onoma_1842.wav" type="audio/wav"></audio>
+                    </td>
+                  </tr>
+  
+                  <tr>
+                    <td rowspan="1" style="vertical-align: top;"><p> German </p>
+                      <audio id="player" controls ><source src="audio/Cross/German/serapionsbruederauswahl_1717.wav" type="audio/wav"></audio>
+                    </td>
+                    <td rowspan="1" style="vertical-align: top;"><p> Dutch </p>
+                      <audio id="player" controls><source src="audio/Cross/German/20000_mijlen_6493.wav" type="audio/wav"></audio>
+                    </td>
+                    <td><p><strong>HierVST</strong></p>
+                      <audio id="player" controls><source src="audio/Cross/German/serapionsbruederauswahl_1717_to_20000_mijlen_6493.wav" type="audio/wav"></audio>
+                    </td><td></td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>           
+              </div>
+          </div>
+        </section>
 
         <div class="scroll-to-top d-lg-none position-fixed"><a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
         <!-- Bootstrap core JS-->
